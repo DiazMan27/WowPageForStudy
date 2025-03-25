@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World of Warcraft</title>
+    <link href="" rel="stylesheet">
+    <link rel="icon" href="web/assets/img/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Exo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1c1c1c;
+            color: white;
+        }
+
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        /* Estilo del símbolo de carga */
+        .spinner {
+            border: 8px solid rgba(255, 255, 255, 0.3);
+            border-top: 8px solid #f4b400;
+            /* Color dorado similar al del WoW */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1.5s linear infinite;
+        }
+
+        /* Animación de rotación del spinner */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        header {
+            background-image: url('#');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        header h1 {
+            font-size: 4rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+
+        .cursor-trail {
+            position: absolute;
+            border-radius: 50%;
+            width: 12px;
+            height: 12px;
+            background-color: #f4b400;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            animation: trail-streak 0.2s ease-out forwards;
+        }
+
+        @keyframes trail-streak {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+        }
+
+
+        /* barra de navegacion */
+        nav {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px 0;
+            text-align: center;
+            border: 2px solid #f4b400;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            margin: 0 15px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            color: #f4b400;
+        }
+
+        /* contenido principal */
+        section {
+            padding: 50px;
+            text-align: center;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        section p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Sección de la tabla */
+        .expansion-table {
+            background-image: url('https://th.bing.com/th/id/R.91860afa32f3b56485756fffb2722057?rik=MacrEI7ZDQgntQ&pid=ImgRaw&r=0');
+            /* Ruta de la imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .expansion-table table {
+            width: 100%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            border: 4px solid #f4b400;
+        }
+
+        .expansion-table th,
+        .expansion-table td {
+            padding: 15px;
+            border: 2px solid #f4b400;
+            font-size: 1rem;
+        }
+
+        .expansion-table th {
+            background-color: #f4b400;
+            color: black;
+        }
+
+        .expansion-table tr:nth-child(even) {
+            background-color: #444;
+        }
+
+        .expansion-table tr:hover {
+            background-color: #f4b400;
+            color: black;
+        }
+
+        /* Footer  */
+        footer {
+            background-color: #111;
+            text-align: center;
+            padding: 20px;
+            color: white;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer p:hover {
+            color: #f4b400;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            header p {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Efecto para cambiar el color de cada letra */
+        .title span {
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+
+        .title span:hover {
+            color: #f4b400;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- seccion del header, parte de arriba -->
+    <header>
+        <video autoplay muted loop>
+            <source src="web/assets/vids/video.mp4" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+        </video>
+        <h1 class="title">
+            <span>W</span>
+            <span>o</span>
+            <span>r</span>
+            <span>l</span>
+            <span>d</span>
+            <span> </span>
+            <span> </span>
+            <span>o</span>
+            <span>f</span>
+            <span> </span>
+            <span> </span>
+            <span>W</span>
+            <span>a</span>
+            <span>r</span>
+            <span>c</span>
+            <span>r</span>
+            <span>a</span>
+            <span>f</span>
+            <span>t</span>
+        </h1>
+        <p>Un universo de aventuras épicas y batallas legendarias.</p>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="#">Inicio</a>
+        <a href="https://worldofwarcraft.blizzard.com/es-es/">UNETE</a>
+        <a href="https://worldofwarcraft.blizzard.com/es-es/news">Noticias</a>
+        <a href="#">Comunidad</a>
+        <a href="#">Soporte</a>
+    </nav>
+
+    <!-- Main Content -->
+    <section>
+        <h2>Únete a la Aventura</h2>
+        <p>Explora el vasto mundo de <strong>Azeroth</strong>, elige tu facción, y sumérgete en una experiencia de juego
+            sin igual. Con nuevos enemigos, amigos y misterios por descubrir, las aventuras nunca terminan.</p>
+    </section>
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+    <!--Sección con Tabla -->
+    <div class="expansion-table">
+        <h2>Expansiones de World of Warcraft</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Expansión</th>
+                    <th>Año</th>
+                    <th>Media Jugadores (Por Mes)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>World of Warcraft</td>
+                    <td>2004</td>
+                    <td>10 millones</td>
+                </tr>
+                <tr>
+                    <td>The Burning Crusade</td>
+                    <td>2007</td>
+                    <td>8 millones</td>
+                </tr>
+                <tr>
+                    <td>Wrath of the Lich King</td>
+                    <td>2008</td>
+                    <td>12 millones</td>
+                </tr>
+                <tr>
+                    <td>Cataclysm</td>
+                    <td>2010</td>
+                    <td>10 millones</td>
+                </tr>
+                <tr>
+                    <td>Mists of Pandaria</td>
+                    <td>2012</td>
+                    <td>9 millones</td>
+                </tr>
+                <tr>
+                    <td>Warlords of Draenor</td>
+                    <td>2014</td>
+                    <td>7 millones</td>
+                </tr>
+                <tr>
+                    <td>Legion</td>
+                    <td>2016</td>
+                    <td>8 millones</td>
+                </tr>
+                <tr>
+                    <td>Battle for Azeroth</td>
+                    <td>2018</td>
+                    <td>6 millones</td>
+                </tr>
+                <tr>
+                    <td>Shadowlands</td>
+                    <td>2020</td>
+                    <td>5 millones</td>
+                </tr>
+                <tr>
+                    <td>Dragonflight</td>
+                    <td>2022</td>
+                    <td>4 millones</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 Blizzard Entertainment. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="web/assets/js/scripwow.js" async defer></script>
+
+
+</body>
+
+</html>
